@@ -3,7 +3,7 @@ import React from 'react'
 const TrendingMovies = ({ trendingMovies }) => {
     console.log(trendingMovies)
     return (
-        <section className='trending'>
+        <section className='trending min-h-[300px]'>
             <h2>Trending Movies</h2>
 
             <ul>

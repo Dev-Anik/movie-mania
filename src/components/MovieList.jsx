@@ -35,8 +35,7 @@ const MovieList = ({ searchItem }) => {
     }, [searchItem]);
 
     return (
-        <section className="all-movies">
-            <h2>All Movies</h2>
+        <section className="all-movies min-h-[500px]">
             {
                 loading ? (
                     <Spinner />
