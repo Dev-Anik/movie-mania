@@ -1,8 +1,9 @@
 import React from 'react'
-import { useState } from 'react';
 import { useFavourite } from '../context/FavouriteContext';
 
 const MovieCard = ({ movie }) => {
+    const { favourites, handleFavourite } = useFavourite();
+    const isFavourite = favourites.some(fav => String(fav.movie_id) === String(movie.id));
     const movieData = {
         movie_id: movie.id,
         poster_url: movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : 'no-movie.png',
@@ -11,8 +12,6 @@ const MovieCard = ({ movie }) => {
         language: movie.original_language ? movie.original_language : "N/A",
         release_date: movie.release_date ? movie.release_date.split('-')[0] : "N/A",
     }
-    const { favourites, handleFavourite } = useFavourite();
-    const isFavourite = favourites.some(fav => String(fav.movie_id) === String(movieData.movie_id));
 
     return (
         <div className='movie-card'>
