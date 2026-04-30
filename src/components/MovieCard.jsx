@@ -1,27 +1,47 @@
 import React from 'react'
+import { useState } from 'react';
+import { useFavourite } from '../context/FavouriteContext';
 
-const MovieCard = ({movie}) => {
-  return (
-    <div className='movie-card'>
-        <img src={movie.poster_path? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`:'no-movie.png'} alt={movie.title} /> 
+const MovieCard = ({ movie }) => {
+    const movieData = {
+        movie_id: movie.id,
+        poster_url: movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : 'no-movie.png',
+        title: movie.title,
+        rating: movie.vote_average ? movie.vote_average.toFixed(1) : "N/A",
+        language: movie.original_language ? movie.original_language : "N/A",
+        release_date: movie.release_date ? movie.release_date.split('-')[0] : "N/A",
+    }
+    const { favourites, handleFavourite } = useFavourite();
+    const isFavourite = favourites.some(fav => String(fav.movie_id) === String(movieData.movie_id));
 
-        <div className='mt-4'>
-            <h3 key={movie.id}>{movie.title}</h3>
-            <div className='content'>
-                <div className='rating'>
-                   <img src="/star.svg" alt="" />
-                    <p>
-                        {movie.vote_average?movie.vote_average.toFixed(1):"N/A"}
-                    </p>
+    return (
+        <div className='movie-card'>
+            <img src={movieData.poster_url} alt={movieData.title} />
+
+            <div className='mt-4'>
+                <h3 key={movieData.movie_id}>{movieData.title}</h3>
+                <div className='content flex items-center justify-between mt-2'>
+                    <div className='flex justify-start items-center gap-x-2'>
+                        <div className='rating'>
+                            <img src="/star.svg" alt="" />
+                            <p>
+                                {movieData.rating}
+                            </p>
+                        </div>
+                        <span>•</span>
+                        <p className='lang'>{movieData.language}</p>
+                        <span>•</span>
+                        <p className='year'>{movieData.release_date}</p>
+                    </div>
+                    <div>
+                        <button key={movieData.movie_id} className='cursor-pointer' onClick={() => handleFavourite(movieData)}>
+                            {isFavourite ? "❤️" : "🤍"}
+                        </button>
+                    </div>
                 </div>
-                <span>•</span>
-                <p className='lang'>{movie.original_language?movie.original_language:"N/A"}</p>
-                <span>•</span>
-                <p className='year'>{movie.release_date?movie.release_date.split('-')[0]:'N/A'}</p>
             </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default MovieCard

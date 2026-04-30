@@ -7,6 +7,7 @@ import { trackSearch } from "../services/searchHistory";
 const MovieList = ({ searchItem }) => {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [favourite, setFavourite] = useState(false);
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -43,7 +44,7 @@ const MovieList = ({ searchItem }) => {
                     error ? (<p className="text-red-500">{error}</p>) : (
                         <ul>
                             {movies.map((movie) => (
-                                <MovieCard key={movie.id} movie={movie} />
+                                <MovieCard key={movie.id} movie={movie}  />
                             ))}
 
                         </ul>
